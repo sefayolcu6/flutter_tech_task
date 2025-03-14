@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tech_task/core/helpers/custom_colors.dart';
@@ -22,11 +23,20 @@ class MainPageScreen extends StatefulWidget {
 class _MainPageScreenState extends State<MainPageScreen> {
   late MainPageCubit mainPageCubit;
   TextEditingController searchBarTextEditingController = TextEditingController();
+  final ValueNotifier<bool> changeLanguage = ValueNotifier<bool>(true);
   @override
   void initState() {
     mainPageCubit = context.read<MainPageCubit>();
     mainPageCubit.getBookList();
     super.initState();
+  }
+
+  void setLanguage() {
+    setState(() {
+      changeLanguage.value = !changeLanguage.value;
+
+      changeLanguage.value ? context.setLocale(const Locale('en')) : context.setLocale(const Locale('tr'));
+    });
   }
 
   @override
@@ -50,7 +60,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
                   mainPageCubit.searchBook(query: "");
                 },
                 controller: searchBarTextEditingController,
-                label: "Kitap Ara",
+                label: "search_book".tr(),
                 onChanged: (p0) {
                   mainPageCubit.searchBook(query: p0);
                 },
@@ -65,8 +75,8 @@ class _MainPageScreenState extends State<MainPageScreen> {
           );
         } else {
           return NotFoundWidget(
-            title: "Bulunamadı",
-            desc: "Kitap listesi bulunamadı",
+            title: "not_found".tr(),
+            desc: "book_list_not_found".tr(),
           );
         }
       },
@@ -84,11 +94,11 @@ class _MainPageScreenState extends State<MainPageScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextRich(
-                  firstText: 'Yayın Yılı:  ',
+                  firstText: 'year'.tr(),
                   lastText: bookList.data![index].year.toString(),
                 ),
                 CustomTextRich(
-                  firstText: 'ISBN:  ',
+                  firstText: 'isbn'.tr(),
                   lastText: bookList.data![index].isbn ?? "",
                 ),
               ],
@@ -114,9 +124,11 @@ class _MainPageScreenState extends State<MainPageScreen> {
 
   AppBar _buildAppar(BuildContext context) {
     return AppBar(
-      title: Text("Ana Sayfa"),
+      title: Text("mainPage".tr()),
       leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            setLanguage();
+          },
           icon: Icon(
             Icons.language_rounded,
             color: CustomColorConstant.instance.white,
