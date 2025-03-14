@@ -54,7 +54,6 @@ class CustomColorConstant {
   final Color lightGreenAccent = Colors.lightGreenAccent;
   final Color deepOrangeAccent = Colors.deepOrangeAccent;
 
-  // Custom shades for existing colors
   final Color red50 = Colors.red.shade50;
   final Color red100 = Colors.red.shade100;
   final Color red200 = Colors.red.shade200;
