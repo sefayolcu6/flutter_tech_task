@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tech_task/core/helpers/custom_colors.dart';
 import 'package:flutter_tech_task/core/helpers/custom_paddings.dart';
 import 'package:flutter_tech_task/core/widgets/divider_widget.dart';
+import 'package:flutter_tech_task/core/widgets/flushbar_widget.dart';
 import 'package:flutter_tech_task/core/widgets/not_found_widget.dart';
 import 'package:flutter_tech_task/features/book_details/viewmodel/book_detail_cubit.dart';
 import 'package:flutter_tech_task/features/book_details/viewmodel/book_detail_state.dart';
@@ -29,6 +30,13 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Detay Bilgileri"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                customSuccessFlushbar(context: context, title: "Başarılı", description: "İlgili kitap bilgileri favorilere eklendi!");
+              },
+              icon: Icon(Icons.bookmark_add_outlined))
+        ],
       ),
       body: BlocBuilder<BookDetailCubit, BookDetailState>(
         builder: (context, state) {
@@ -36,9 +44,9 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
             return Center(child: CircularProgressIndicator());
           } else if (state is BookDetailSuccess) {
             return Card(
-              elevation: 4, // Hafif bir gölge verir
+              elevation: 4,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12), // Köşeleri yumuşatır
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
                 padding: CustomPaddingConstant.instance.appPaddingAll16,
