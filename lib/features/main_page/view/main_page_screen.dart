@@ -47,6 +47,9 @@ class _MainPageScreenState extends State<MainPageScreen> {
               AppTextFormField(
                 controller: searchBarTextEditingController,
                 label: "Kitap Ara",
+                onChanged: (p0) {
+                  mainPageCubit.searchBook(query: p0);
+                },
               ),
               _buildBookCardList(bookList: state.bookList!),
             ],
@@ -72,7 +75,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
         itemCount: bookList.data?.length,
         itemBuilder: (context, index) {
           return CustomListTileCard(
-            title: Text(bookList.data![index].title!),
+            title: Text(bookList.data?[index].title! ?? ""),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

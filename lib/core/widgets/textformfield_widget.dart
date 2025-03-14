@@ -10,6 +10,7 @@ class AppTextFormField extends StatefulWidget {
   final Widget? prefixIcon;
   final bool? readOnly;
   final String? Function(String?)? validator;
+  final Function(String)? onChanged;
 
   const AppTextFormField({
     Key? key,
@@ -20,7 +21,7 @@ class AppTextFormField extends StatefulWidget {
     this.onTap,
     this.prefixIcon,
     this.readOnly,
-    this.validator,
+    this.validator, this.onChanged,
   }) : super(key: key);
 
   @override
@@ -33,6 +34,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
     return Padding(
       padding: CustomPaddingConstant.instance.appPaddingAll4,
       child: TextFormField(
+        onChanged: widget.onChanged,
         validator: widget.validator,
         onTap: widget.onTap,
         focusNode: widget.focusNode,
