@@ -1,0 +1,17 @@
+{
+    "mainPage":"Ana Sayfa",
+    "detailInfo":"Detay Bilgileri",
+    "success":"Başarılı",
+    "fail":"Başarısız",
+    "added_book_informations":"İlgili kitap bilgileri favorilere eklendi!",
+    "handle":"Handle: ",
+    "isbn":"ISBN: ",
+    "publisher":"Yayıncı: ",
+    "year":"Yıl: ",
+    "notes":"Notlar: ",
+    "not_found":"Bulunamadı",
+    "not_found_book_info":"Kitaba ait detay bilgisi bulunamadı",
+    "my_favorite_list":"Favori Listem",
+    "search_book":"Kitap Ara",
+    "book_list_not_found":"Kitap listesi bulunamadı"
+}

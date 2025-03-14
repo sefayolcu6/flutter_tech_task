@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tech_task/core/helpers/custom_colors.dart';
@@ -29,11 +30,11 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detay Bilgileri"),
+        title: Text("detailInfo".tr()),
         actions: [
           IconButton(
               onPressed: () {
-                customSuccessFlushbar(context: context, title: "Başarılı", description: "İlgili kitap bilgileri favorilere eklendi!");
+                customSuccessFlushbar(context: context, title: "success".tr(), description: "added_book_informations".tr());
               },
               icon: Icon(Icons.bookmark_add_outlined))
         ],
@@ -64,11 +65,11 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildDetailRow("Handle", state.getBookDetailList.data!.handle!),
-                        _buildDetailRow("ISBN", state.getBookDetailList.data!.isbn!),
-                        _buildDetailRow("Yayıncı", state.getBookDetailList.data!.publisher!),
-                        _buildDetailRow("Yıl", state.getBookDetailList.data!.year.toString()),
-                        _buildDetailRow("Notlar", state.getBookDetailList.data!.notes?.join("\n") ?? "-"),
+                        _buildDetailRow("handle".tr(), state.getBookDetailList.data!.handle!),
+                        _buildDetailRow("isbn".tr(), state.getBookDetailList.data!.isbn!),
+                        _buildDetailRow("publisher".tr(), state.getBookDetailList.data!.publisher!),
+                        _buildDetailRow("year".tr(), state.getBookDetailList.data!.year.toString()),
+                        _buildDetailRow("notes".tr(), state.getBookDetailList.data!.notes?.join("\n") ?? "-"),
                       ],
                     ),
                   ],
@@ -76,9 +77,9 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
               ),
             );
           } else if (state is BookDetailError) {
-            return NotFoundWidget(title: "Bulunamadı", desc: "Kitaba ait detay bilgisi bulunamadı");
+            return NotFoundWidget(title: "not_found".tr(), desc: "not_found_book_info".tr());
           } else {
-            return NotFoundWidget(title: "Bulunamadı", desc: "Kitaba ait detay bilgisi bulunamadı");
+            return NotFoundWidget(title: "not_found".tr(), desc: "not_found_book_info".tr());
           }
         },
       ),

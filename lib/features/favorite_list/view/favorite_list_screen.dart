@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tech_task/core/helpers/custom_colors.dart';
 import 'package:flutter_tech_task/core/helpers/custom_paddings.dart';
@@ -15,7 +16,7 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Favori Listem"),
+          title: Text("my_favorite_list".tr()),
         ),
         body: ListView.builder(
           itemCount: 20,

@@ -1,0 +1,17 @@
+{
+    "mainPage": "Main Page",
+    "detailInfo": "Detail Informations",
+    "success": "Success",
+    "fail": "Fail",
+    "added_book_informations": "The related book information has been added to favorites!",
+    "handle": "Handle: ",
+    "isbn": "ISBN: ",
+    "publisher": "Publisher: ",
+    "year": "Year: ",
+    "notes": "Notes: ",
+    "not_found": "Not Found",
+    "not_found_book_info": "Details about the book could not be found.",
+    "my_favorite_list": "My Favorite List",
+    "search_book": "Search Book",
+    "book_list_not_found":"Book list not found"
+}
