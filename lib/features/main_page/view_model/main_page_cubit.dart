@@ -12,7 +12,7 @@ class MainPageCubit extends Cubit<MainPageCubitState> {
   Future<void> getBookList() async {
     emit(MainPageCubitLoading());
 
-    mainPageServices.getBookList(apiUrl: "https://stephen-king-api.onrender.com/api/books", fromJson: (p0) => GetBookList.fromJson(p0)).then(
+    mainPageServices.getModalFunc(apiUrl: "https://stephen-king-api.onrender.com/api/books", fromJson: (p0) => GetBookList.fromJson(p0)).then(
       (value) {
         if (value != null) {
           booksTempList = value;
@@ -20,6 +20,10 @@ class MainPageCubit extends Cubit<MainPageCubitState> {
         } else {
           emit(MainPageCubitError(title: "Bulunamadı", description: "Kitap listesi bulunamadı"));
         }
+      },
+    ).onError(
+      (error, stackTrace) {
+        emit(MainPageCubitError(title: "Bulunamadı", description: "Kitap listesi bulunamadı"));
       },
     );
   }

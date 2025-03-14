@@ -11,9 +11,9 @@ Future customErrorFlushbar({required BuildContext context, required String title
     margin: const EdgeInsets.all(6.0),
     borderRadius: BorderRadius.circular(12),
     backgroundGradient: LinearGradient(colors: [CustomColorConstant.instance.red, CustomColorConstant.instance.black]),
-    boxShadows: const [
+    boxShadows:  [
       BoxShadow(
-        color: Colors.black,
+        color: CustomColorConstant.instance.black,
         offset: Offset(0.0, 2.0),
         blurRadius: 3.0,
       )
@@ -36,10 +36,10 @@ Future customInfoFlushbar({required BuildContext context, required String title,
     ),
     margin: const EdgeInsets.all(6.0),
     borderRadius: BorderRadius.circular(12),
-    backgroundGradient: const LinearGradient(colors: [Colors.orange, Colors.teal]),
-    boxShadows: const [
+    backgroundGradient:  LinearGradient(colors: [CustomColorConstant.instance.orange, CustomColorConstant.instance.teal]),
+    boxShadows:  [
       BoxShadow(
-        color: Colors.orange,
+        color: CustomColorConstant.instance.orange,
         offset: Offset(0.0, 2.0),
         blurRadius: 3.0,
       )
@@ -66,9 +66,9 @@ Future customSuccessFlushbar({required BuildContext context, Widget? icon, Funct
       CustomColorConstant.instance.green,
       CustomColorConstant.instance.blue100,
     ]),
-    boxShadows: const [
+    boxShadows:  [
       BoxShadow(
-        color: Colors.orange,
+        color: CustomColorConstant.instance.orange,
         offset: Offset(0.0, 2.0),
         blurRadius: 3.0,
       )

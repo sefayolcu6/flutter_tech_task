@@ -6,6 +6,7 @@ import 'package:flutter_tech_task/core/widgets/not_found_widget.dart';
 import 'package:flutter_tech_task/core/widgets/text_rich.dart';
 import 'package:flutter_tech_task/core/widgets/textformfield_widget.dart';
 import 'package:flutter_tech_task/features/book_details/view/book_detail_screen.dart';
+import 'package:flutter_tech_task/features/book_details/viewmodel/book_detail_cubit.dart';
 import 'package:flutter_tech_task/features/favorite_list/view/favorite_list_screen.dart';
 import 'package:flutter_tech_task/features/main_page/model/book_detail_model.dart';
 import 'package:flutter_tech_task/features/main_page/view_model/main_page_cubit.dart';
@@ -45,6 +46,9 @@ class _MainPageScreenState extends State<MainPageScreen> {
           return Column(
             children: [
               AppTextFormField(
+                suffixIconOnPressed: () {
+                  mainPageCubit.searchBook(query: "");
+                },
                 controller: searchBarTextEditingController,
                 label: "Kitap Ara",
                 onChanged: (p0) {
@@ -93,8 +97,12 @@ class _MainPageScreenState extends State<MainPageScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => BookDetailScreen(),
-                  ));
+                      builder: (context) => BlocProvider(
+                            create: (context) => BookDetailCubit(),
+                            child: BookDetailScreen(
+                              bookId: bookList.data![index].id!,
+                            ),
+                          )));
             },
             trailing: Icon(Icons.chevron_right_outlined),
             leading: Icon(Icons.menu_book_sharp),

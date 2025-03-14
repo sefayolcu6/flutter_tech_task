@@ -11,6 +11,7 @@ class AppTextFormField extends StatefulWidget {
   final bool? readOnly;
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
+  final void Function()? suffixIconOnPressed;
 
   const AppTextFormField({
     Key? key,
@@ -21,7 +22,9 @@ class AppTextFormField extends StatefulWidget {
     this.onTap,
     this.prefixIcon,
     this.readOnly,
-    this.validator, this.onChanged,
+    this.validator,
+    this.onChanged,
+    this.suffixIconOnPressed,
   }) : super(key: key);
 
   @override
@@ -48,6 +51,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             onPressed: () {
               widget.controller.clear();
               widget.focusNode?.unfocus();
+              widget.suffixIconOnPressed!();
             },
             icon: const Icon(Icons.close),
           ),
