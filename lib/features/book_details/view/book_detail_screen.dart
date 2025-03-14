@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tech_task/core/helpers/custom_colors.dart';
 import 'package:flutter_tech_task/core/helpers/custom_paddings.dart';
+import 'package:flutter_tech_task/core/helpers/image_paths.dart';
 import 'package:flutter_tech_task/core/widgets/divider_widget.dart';
 import 'package:flutter_tech_task/core/widgets/flushbar_widget.dart';
 import 'package:flutter_tech_task/core/widgets/not_found_widget.dart';
 import 'package:flutter_tech_task/features/book_details/viewmodel/book_detail_cubit.dart';
 import 'package:flutter_tech_task/features/book_details/viewmodel/book_detail_state.dart';
+import 'package:lottie/lottie.dart';
 
 class BookDetailScreen extends StatefulWidget {
   final int bookId;
@@ -42,7 +44,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
       body: BlocBuilder<BookDetailCubit, BookDetailState>(
         builder: (context, state) {
           if (state is BookDetailLoading) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: Lottie.asset(ImagePaths.instance.loadingLottie));
           } else if (state is BookDetailSuccess) {
             return Card(
               elevation: 4,
