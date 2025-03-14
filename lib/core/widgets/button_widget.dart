@@ -51,7 +51,7 @@ class _CustomTextButtonErrorState extends State<CustomTextButtonError> {
       ),
       onPressed: widget.onTap,
       child: Padding(
-        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+        padding: CustomPaddingConstant.instance.appPaddingSymmetricHorizontal12,
         child: Text(widget.text, style: TextStyle(color: CustomColorConstant.instance.red, fontSize: 14, fontWeight: FontWeight.w500)),
       ),
     );
@@ -82,7 +82,7 @@ class _CustomTextButtonSuccessState extends State<CustomTextButtonSuccess> {
       ),
       onPressed: widget.onTap,
       child: Padding(
-        padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+        padding: CustomPaddingConstant.instance.appPaddingSymmetricHorizontal12,
         child: Text(widget.text, style: TextStyle(color: CustomColorConstant.instance.primaryColor, fontSize: 14, fontWeight: FontWeight.w500)),
       ),
     );
