@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tech_task/core/helpers/custom_colors.dart';
 import 'package:flutter_tech_task/core/widgets/listtile_card_widget.dart';
 import 'package:flutter_tech_task/core/widgets/not_found_widget.dart';
+import 'package:flutter_tech_task/core/widgets/text_rich.dart';
 import 'package:flutter_tech_task/core/widgets/textformfield_widget.dart';
 import 'package:flutter_tech_task/features/book_details/view/book_detail_screen.dart';
 import 'package:flutter_tech_task/features/favorite_list/view/favorite_list_screen.dart';
@@ -72,7 +73,19 @@ class _MainPageScreenState extends State<MainPageScreen> {
         itemBuilder: (context, index) {
           return CustomListTileCard(
             title: Text(bookList.data![index].title!),
-            subtitle: Text(bookList.data![index].year.toString()),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextRich(
+                  firstText: 'Yayın Yılı:  ',
+                  lastText: bookList.data![index].year.toString(),
+                ),
+                CustomTextRich(
+                  firstText: 'ISBN:  ',
+                  lastText: bookList.data![index].isbn ?? "",
+                ),
+              ],
+            ),
             onTap: () {
               Navigator.push(
                   context,
