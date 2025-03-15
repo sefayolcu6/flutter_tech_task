@@ -13,5 +13,8 @@
     "not_found_book_info":"Kitaba ait detay bilgisi bulunamadı",
     "my_favorite_list":"Favori Listem",
     "search_book":"Kitap Ara",
-    "book_list_not_found":"Kitap listesi bulunamadı"
+    "book_list_not_found":"Kitap listesi bulunamadı",
+    "are_you_sure":"Emin misiniz?",
+    "your_saved_data_will_be_deleted":"Kayıtlı verileriniz silinecektir. Emin misiniz?",
+    "yes":"Evet"
 }

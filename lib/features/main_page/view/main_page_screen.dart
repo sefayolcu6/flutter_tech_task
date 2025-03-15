@@ -11,6 +11,7 @@ import 'package:flutter_tech_task/core/widgets/textformfield_widget.dart';
 import 'package:flutter_tech_task/features/book_details/view/book_detail_screen.dart';
 import 'package:flutter_tech_task/features/book_details/viewmodel/book_detail_cubit.dart';
 import 'package:flutter_tech_task/features/favorite_list/view/favorite_list_screen.dart';
+import 'package:flutter_tech_task/features/favorite_list/view_model/favorite_list_cubit.dart';
 import 'package:flutter_tech_task/features/main_page/model/book_detail_model.dart';
 import 'package:flutter_tech_task/features/main_page/view_model/main_page_cubit.dart';
 import 'package:flutter_tech_task/features/main_page/view_model/main_page_state.dart';
@@ -167,7 +168,10 @@ class _MainPageScreenState extends State<MainPageScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FavoriteListScreen(),
+                    builder: (context) => BlocProvider(
+                      create: (context) => FavoriteListCubit(),
+                      child: FavoriteListScreen(),
+                    ),
                   ));
             },
             icon: Icon(Icons.star_outline))

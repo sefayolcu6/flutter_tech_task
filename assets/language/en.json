@@ -13,5 +13,9 @@
     "not_found_book_info": "Details about the book could not be found.",
     "my_favorite_list": "My Favorite List",
     "search_book": "Search Book",
-    "book_list_not_found":"Book list not found"
+    "book_list_not_found":"Book list not found",
+    "are_you_sure":"Are you sure?",
+    "your_saved_data_will_be_deleted": "Your saved data will be deleted. Are you sure?",
+    "yes":"Yes"
+
 }
