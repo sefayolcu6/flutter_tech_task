@@ -5,6 +5,7 @@ import 'package:flutter_tech_task/core/helpers/custom_colors.dart';
 import 'package:flutter_tech_task/core/helpers/image_paths.dart';
 import 'package:flutter_tech_task/core/widgets/listtile_card_widget.dart';
 import 'package:flutter_tech_task/core/widgets/not_found_widget.dart';
+import 'package:flutter_tech_task/core/widgets/switch_widget.dart';
 import 'package:flutter_tech_task/core/widgets/text_rich.dart';
 import 'package:flutter_tech_task/core/widgets/textformfield_widget.dart';
 import 'package:flutter_tech_task/features/book_details/view/book_detail_screen.dart';
@@ -16,7 +17,8 @@ import 'package:flutter_tech_task/features/main_page/view_model/main_page_state.
 import 'package:lottie/lottie.dart';
 
 class MainPageScreen extends StatefulWidget {
-  const MainPageScreen({super.key});
+  final Function() changeThemeMode;
+  const MainPageScreen({super.key, required this.changeThemeMode});
 
   @override
   State<MainPageScreen> createState() => _MainPageScreenState();
@@ -26,6 +28,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
   late MainPageCubit mainPageCubit;
   TextEditingController searchBarTextEditingController = TextEditingController();
   final ValueNotifier<bool> changeLanguage = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> changeTheme = ValueNotifier<bool>(true);
   @override
   void initState() {
     mainPageCubit = context.read<MainPageCubit>();
@@ -34,11 +37,13 @@ class _MainPageScreenState extends State<MainPageScreen> {
   }
 
   void setLanguage() {
-    setState(() {
-      changeLanguage.value = !changeLanguage.value;
+    changeLanguage.value = !changeLanguage.value;
 
-      changeLanguage.value ? context.setLocale(const Locale('en')) : context.setLocale(const Locale('tr'));
-    });
+    changeLanguage.value ? context.setLocale(const Locale('en')) : context.setLocale(const Locale('tr'));
+  }
+
+  void setSwitch() {
+    changeTheme.value = !changeTheme.value;
   }
 
   @override
@@ -70,7 +75,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
                   mainPageCubit.searchBook(query: p0);
                 },
               ),
-              _buildBookCardList(bookList: state.bookList!),
+              _buildBookCardList(bookList: state.bookModel!),
             ],
           );
         } else if (state is MainPageCubitError) {
@@ -130,15 +135,33 @@ class _MainPageScreenState extends State<MainPageScreen> {
   AppBar _buildAppar(BuildContext context) {
     return AppBar(
       title: Text("mainPage".tr()),
-      leading: IconButton(
-          onPressed: () {
-            setLanguage();
-          },
-          icon: Icon(
-            Icons.language_rounded,
-            color: CustomColorConstant.instance.white,
-          )),
+      leading: ValueListenableBuilder(
+        valueListenable: changeLanguage,
+        builder: (context, value, child) {
+          return IconButton(
+              onPressed: () {
+                setLanguage();
+              },
+              icon: Icon(
+                Icons.language_rounded,
+                color: CustomColorConstant.instance.white,
+              ));
+        },
+      ),
       actions: [
+        ValueListenableBuilder(
+          valueListenable: changeTheme,
+          builder: (context, value, child) {
+            return AppSwitch(
+              isActive: changeTheme.value,
+              onChanged: (p0) {
+                widget.changeThemeMode();
+                setSwitch();
+                return true;
+              },
+            );
+          },
+        ),
         IconButton(
             onPressed: () {
               Navigator.push(

@@ -102,7 +102,9 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           Expanded(
-            child: Text(value, style: TextStyle(color: CustomColorConstant.instance.black)),
+            child: Text(
+              value,
+            ),
           ),
         ],
       ),

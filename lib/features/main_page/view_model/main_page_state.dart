@@ -7,9 +7,9 @@ final class MainPageCubitInitial extends MainPageCubitState {}
 final class MainPageCubitLoading extends MainPageCubitState {}
 
 final class MainPageCubitSuccess extends MainPageCubitState {
-  final GetBookList? bookList;
+  final GetBookList? bookModel;
 
-  MainPageCubitSuccess({required this.bookList});
+  MainPageCubitSuccess({required this.bookModel});
 }
 
 final class MainPageCubitError extends MainPageCubitState {
