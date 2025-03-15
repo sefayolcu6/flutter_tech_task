@@ -1,0 +1,17 @@
+Flutter Tech Task
+
+- Projeyi yapmaya öncelikle klasör yapısını oluşturarak başladım. Proje genelinde kullanacağım işlemleri core klasöründe, viewlara özel olan işlemleri features klasöründe toparladım.
+- Uygulamada kullanabileceğim componentleri core katmanı altındaki widgets klasörü altına ekledim.
+- Image, Padding, Colors sınıflarını uygulamanın her yerinde kullanabileceğim için bunları tek bir class içinde singleton yapısı ile tanımladım
+- Başlangıç seviyesinde UI tasarımlarını, navigation işlemleri ile de birleştirerek bir uygulama yapısı elde ettim.
+- Daha sonra MainPageScreen sayfası için API&Cubit bağlantılarını tamamladım.("https://stephen-king-api.onrender.com/api/books")
+- MainPageCubit sınıfında apiye istek atmadan kitapların ismine göre filtreleme yapabileceğim searchBook fonksiyonu ekledim. 
+- MainPageScreen ekranında listelediğim her bir elemanın ID değerlerini alarak ilgili kitap detay bilgilerini göstereceğim ekranın API&Cubit bağlantılarını tamamladım.("https://stephen-king-api.onrender.com/api/book/$bookId")
+- Ekranda klasik CircularProgressIndicator yerine kullanıcı dostu bir UI olması açısından loading statelerinde göstereceğim lottie animasyonunu ekledim.
+- Eklemem gereken Localization ile dil desteği işlemlerini easy_localization paketini kullanarak ekledim. İlgili fonksiyonu MainPageScreen sayfasında sol üstteki ikona ekledim.
+- MainPageScreen ekranında sağ üstteki switch widgetına tema değişikliğini yapabileceğim bir fonksiyon ekledim. Bu fonksiyonu dependency injectionun bir yolu olan GetIt paketini kullanarak ekledim.
+- BookDetailScreen sayfasında görüntülediğim kitap detayı bilgilerini ekrandaki ikona tıklayarak Hive e bir liste olarak kaydedilmesini sağladım. Daha sonra bu listeyi FavoriteListScreen ekranında gösterdim.
+  Bunun için hive, hive_flutter ve hive_generator paketlerini kullandım.
+- Yine FavoriteListScreen ekranının sağ üstündeki sil butonuna Hive e eklemiş bilgilerin silinmesi için gerekli fonksiyonu ekledim.
+- flutter_local_notifications paketini kullanarak NotificationService sınıfında uygulamadan kullanıcıya bildirim gönderilmesini sağladım. Burada showNotification ile bildirimin gösterilmesini,
+ _handleNotificationTap metodu ile de bildirime tıklanınca yönlendirilmesi gereken ekranın Navigation fonksiyonunu yazdım.

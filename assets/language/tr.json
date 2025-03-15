@@ -16,5 +16,6 @@
     "book_list_not_found":"Kitap listesi bulunamadı",
     "are_you_sure":"Emin misiniz?",
     "your_saved_data_will_be_deleted":"Kayıtlı verileriniz silinecektir. Emin misiniz?",
-    "yes":"Evet"
+    "yes":"Evet",
+    "no":"Hayır"
 }
