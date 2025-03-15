@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tech_task/core/helpers/custom_colors.dart';
+import 'package:flutter_tech_task/core/notification_service/notification_service.dart';
 import 'package:flutter_tech_task/core/theme/theme_data_service/locator.dart';
 import 'package:flutter_tech_task/core/theme/theme_data_service/theme_cubit.dart';
 import 'package:flutter_tech_task/core/theme/theme_data_service/theme_data_service.dart';
@@ -11,6 +12,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'features/favorite_list/model/book_detail_model.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -19,16 +21,22 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(BookAdapter());
+  await NotificationService().initNotification();
+
   runApp(EasyLocalization(
     supportedLocales: const [Locale('en'), Locale('tr')],
     path: 'assets/language',
     fallbackLocale: const Locale('en'),
-    child: const FlutterTechTask(),
+    child: FlutterTechTask(
+      navigatorKey: navigatorKey,
+    ),
   ));
 }
 
 class FlutterTechTask extends StatefulWidget {
-  const FlutterTechTask({super.key});
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  const FlutterTechTask({super.key, required this.navigatorKey});
 
   @override
   State<FlutterTechTask> createState() => FlutterTechTaskState();
@@ -42,6 +50,7 @@ class FlutterTechTaskState extends State<FlutterTechTask> {
         child: BlocBuilder<ThemeCubit, ThemeMode>(
           builder: (context, state) {
             return MaterialApp(
+                navigatorKey: widget.navigatorKey,
                 localizationsDelegates: context.localizationDelegates,
                 supportedLocales: context.supportedLocales,
                 locale: context.locale,

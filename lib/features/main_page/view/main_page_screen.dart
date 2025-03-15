@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tech_task/core/helpers/custom_colors.dart';
 import 'package:flutter_tech_task/core/helpers/image_paths.dart';
+import 'package:flutter_tech_task/core/notification_service/notification_service.dart';
 import 'package:flutter_tech_task/core/widgets/listtile_card_widget.dart';
 import 'package:flutter_tech_task/core/widgets/not_found_widget.dart';
 import 'package:flutter_tech_task/core/widgets/switch_widget.dart';
@@ -50,6 +51,14 @@ class _MainPageScreenState extends State<MainPageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.notifications_none_rounded),
+          onPressed: () async {
+            await NotificationService().showNotification(
+              title: "Flutter Tech Task",
+              body: "Kitap bilgilerinizi görüntüleyebilirsiniz",
+            );
+          }),
       appBar: _buildAppar(context),
       body: _buildMainBody(),
     );
