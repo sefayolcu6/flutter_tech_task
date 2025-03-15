@@ -75,7 +75,7 @@ class _MainPageScreenState extends State<MainPageScreen> {
                   mainPageCubit.searchBook(query: p0);
                 },
               ),
-              _buildBookCardList(bookList: state.bookList!),
+              _buildBookCardList(bookList: state.bookModel!),
             ],
           );
         } else if (state is MainPageCubitError) {
