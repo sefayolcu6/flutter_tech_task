@@ -29,7 +29,6 @@ class NotificationService {
       },
     );
 
-    // Android için kanal oluşturma
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'channelId',
       'channelName',
