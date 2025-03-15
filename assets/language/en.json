@@ -16,6 +16,7 @@
     "book_list_not_found":"Book list not found",
     "are_you_sure":"Are you sure?",
     "your_saved_data_will_be_deleted": "Your saved data will be deleted. Are you sure?",
-    "yes":"Yes"
+    "yes":"Yes",
+    "no":"No"
 
 }
