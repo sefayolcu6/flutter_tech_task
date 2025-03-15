@@ -7,11 +7,18 @@ import 'package:flutter_tech_task/core/theme/theme_data_service/theme_data_servi
 import 'package:flutter_tech_task/features/main_page/view/main_page_screen.dart';
 import 'package:flutter_tech_task/features/main_page/view_model/main_page_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'features/favorite_list/model/book_detail_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   setupLocator();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(BookAdapter());
   runApp(EasyLocalization(
     supportedLocales: const [Locale('en'), Locale('tr')],
     path: 'assets/language',

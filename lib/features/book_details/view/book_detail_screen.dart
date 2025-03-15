@@ -9,6 +9,8 @@ import 'package:flutter_tech_task/core/widgets/flushbar_widget.dart';
 import 'package:flutter_tech_task/core/widgets/not_found_widget.dart';
 import 'package:flutter_tech_task/features/book_details/viewmodel/book_detail_cubit.dart';
 import 'package:flutter_tech_task/features/book_details/viewmodel/book_detail_state.dart';
+import 'package:flutter_tech_task/features/favorite_list/model/book_detail_model.dart';
+import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
 
 class BookDetailScreen extends StatefulWidget {
@@ -33,13 +35,6 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("detailInfo".tr()),
-        actions: [
-          IconButton(
-              onPressed: () {
-                customSuccessFlushbar(context: context, title: "success".tr(), description: "added_book_informations".tr());
-              },
-              icon: Icon(Icons.bookmark_add_outlined))
-        ],
       ),
       body: BlocBuilder<BookDetailCubit, BookDetailState>(
         builder: (context, state) {
@@ -56,24 +51,45 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      state.getBookDetailList.data!.title!,
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: CustomColorConstant.instance.primaryColor,
-                          ),
-                    ),
-                    customDivider(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _buildDetailRow("handle".tr(), state.getBookDetailList.data!.handle!),
-                        _buildDetailRow("isbn".tr(), state.getBookDetailList.data!.isbn!),
-                        _buildDetailRow("publisher".tr(), state.getBookDetailList.data!.publisher!),
-                        _buildDetailRow("year".tr(), state.getBookDetailList.data!.year.toString()),
-                        _buildDetailRow("notes".tr(), state.getBookDetailList.data!.notes?.join("\n") ?? "-"),
+                        Text(
+                          state.getBookDetailList.data!.title!,
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: CustomColorConstant.instance.primaryColor,
+                              ),
+                        ),
+                        IconButton(
+                            onPressed: () async {
+                              var box = await Hive.openBox<Book>('books');
+
+                              List<Book> bookList = [
+                                Book(
+                                    title: state.getBookDetailList.data?.title ?? "-",
+                                    handle: state.getBookDetailList.data?.handle ?? "-",
+                                    isbn: state.getBookDetailList.data?.isbn ?? "-",
+                                    publisher: state.getBookDetailList.data?.publisher ?? "-",
+                                    year: state.getBookDetailList.data?.year?.toInt() ?? 0,
+                                    notes: state.getBookDetailList.data?.notes.toString() ?? "-"),
+                              ];
+
+                              for (var book in bookList) {
+                                await box.add(book);
+                              }
+
+                              customSuccessFlushbar(context: context, title: "success".tr(), description: "added_book_informations".tr());
+                            },
+                            icon: Icon(Icons.bookmark_add_outlined))
                       ],
                     ),
+                    customDivider(),
+                    _buildDetailRow("handle".tr(), state.getBookDetailList.data!.handle!),
+                    _buildDetailRow("isbn".tr(), state.getBookDetailList.data!.isbn!),
+                    _buildDetailRow("publisher".tr(), state.getBookDetailList.data!.publisher!),
+                    _buildDetailRow("year".tr(), state.getBookDetailList.data!.year.toString()),
+                    _buildDetailRow("notes".tr(), state.getBookDetailList.data!.notes?.join("\n") ?? "-"),
                   ],
                 ),
               ),
