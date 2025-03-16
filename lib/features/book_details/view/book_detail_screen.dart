@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tech_task/core/helpers/custom_colors.dart';
 import 'package:flutter_tech_task/core/helpers/custom_paddings.dart';
 import 'package:flutter_tech_task/core/helpers/image_paths.dart';
+import 'package:flutter_tech_task/core/mixins/utils.dart';
 import 'package:flutter_tech_task/core/widgets/divider_widget.dart';
 import 'package:flutter_tech_task/core/widgets/flushbar_widget.dart';
 import 'package:flutter_tech_task/core/widgets/not_found_widget.dart';
@@ -21,7 +22,7 @@ class BookDetailScreen extends StatefulWidget {
   State<BookDetailScreen> createState() => _BookDetailScreenState();
 }
 
-class _BookDetailScreenState extends State<BookDetailScreen> {
+class _BookDetailScreenState extends State<BookDetailScreen> with Utils {
   late BookDetailCubit bookDetailCubit;
   @override
   void initState() {
@@ -33,74 +34,85 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("detailInfo".tr()),
-      ),
-      body: BlocBuilder<BookDetailCubit, BookDetailState>(
-        builder: (context, state) {
-          if (state is BookDetailLoading) {
-            return Center(child: Lottie.asset(ImagePaths.instance.loadingLottie));
-          } else if (state is BookDetailSuccess) {
-            return Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: CustomPaddingConstant.instance.appPaddingAll16,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
+      appBar: _buildAppBar(),
+      body: _buildBodyView(),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: Text("detailInfo".tr()),
+    );
+  }
+
+  BlocBuilder<BookDetailCubit, BookDetailState> _buildBodyView() {
+    return BlocBuilder<BookDetailCubit, BookDetailState>(
+      builder: (context, state) {
+        if (state is BookDetailLoading) {
+          return Center(child: Lottie.asset(ImagePaths.instance.loadingLottie));
+        } else if (state is BookDetailSuccess) {
+          return Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Padding(
+              padding: CustomPaddingConstant.instance.appPaddingAll16,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
                           state.getBookDetailList.data!.title!,
                           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: CustomColorConstant.instance.primaryColor,
+                                overflow: TextOverflow.ellipsis,
                               ),
                         ),
-                        IconButton(
-                            onPressed: () async {
-                              var box = await Hive.openBox<Book>('books');
+                      ),
+                      IconButton(
+                          onPressed: () async {
+                            var box = await Hive.openBox<Book>('books');
 
-                              List<Book> bookList = [
-                                Book(
-                                    title: state.getBookDetailList.data?.title ?? "-",
-                                    handle: state.getBookDetailList.data?.handle ?? "-",
-                                    isbn: state.getBookDetailList.data?.isbn ?? "-",
-                                    publisher: state.getBookDetailList.data?.publisher ?? "-",
-                                    year: state.getBookDetailList.data?.year?.toInt() ?? 0,
-                                    notes: state.getBookDetailList.data?.notes.toString() ?? "-"),
-                              ];
+                            List<Book> bookList = [
+                              Book(
+                                  title: state.getBookDetailList.data?.title ?? "-",
+                                  handle: state.getBookDetailList.data?.handle ?? "-",
+                                  isbn: state.getBookDetailList.data?.isbn ?? "-",
+                                  publisher: state.getBookDetailList.data?.publisher ?? "-",
+                                  year: state.getBookDetailList.data?.year?.toInt() ?? 0,
+                                  notes: state.getBookDetailList.data?.notes.toString() ?? "-"),
+                            ];
 
-                              for (var book in bookList) {
-                                await box.add(book);
-                              }
+                            for (var book in bookList) {
+                              await box.add(book);
+                            }
 
-                              customSuccessFlushbar(context: context, title: "success".tr(), description: "added_book_informations".tr());
-                            },
-                            icon: Icon(Icons.bookmark_add_outlined))
-                      ],
-                    ),
-                    customDivider(),
-                    _buildDetailRow("handle".tr(), state.getBookDetailList.data!.handle!),
-                    _buildDetailRow("isbn".tr(), state.getBookDetailList.data!.isbn!),
-                    _buildDetailRow("publisher".tr(), state.getBookDetailList.data!.publisher!),
-                    _buildDetailRow("year".tr(), state.getBookDetailList.data!.year.toString()),
-                    _buildDetailRow("notes".tr(), state.getBookDetailList.data!.notes?.join("\n") ?? "-"),
-                  ],
-                ),
+                            customSuccessFlushbar(context: context, title: "success".tr(), description: "added_book_informations".tr());
+                          },
+                          icon: Icon(Icons.bookmark_add_outlined))
+                    ],
+                  ),
+                  customDivider(),
+                  _buildDetailRow("handle".tr(), state.getBookDetailList.data!.handle!),
+                  _buildDetailRow("isbn".tr(), state.getBookDetailList.data!.isbn!),
+                  _buildDetailRow("publisher".tr(), state.getBookDetailList.data!.publisher!),
+                  _buildDetailRow("year".tr(), state.getBookDetailList.data!.year.toString()),
+                  _buildDetailRow("notes".tr(), state.getBookDetailList.data!.notes?.join("\n") ?? "-"),
+                ],
               ),
-            );
-          } else if (state is BookDetailError) {
-            return NotFoundWidget(title: "not_found".tr(), desc: "not_found_book_info".tr());
-          } else {
-            return NotFoundWidget(title: "not_found".tr(), desc: "not_found_book_info".tr());
-          }
-        },
-      ),
+            ),
+          );
+        } else if (state is BookDetailError) {
+          return NotFoundWidget(title: "not_found".tr(), desc: "not_found_book_info".tr());
+        } else {
+          return NotFoundWidget(title: "not_found".tr(), desc: "not_found_book_info".tr());
+        }
+      },
     );
   }
 

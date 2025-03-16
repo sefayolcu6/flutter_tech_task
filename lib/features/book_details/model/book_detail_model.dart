@@ -9,14 +9,14 @@ GetBookDetailList getBookDetailListFromJson(String str) => GetBookDetailList.fro
 String getBookDetailListToJson(GetBookDetailList data) => json.encode(data.toJson());
 
 class GetBookDetailList {
-  Data? data;
+  BookDetail? data;
 
   GetBookDetailList({
     this.data,
   });
 
   factory GetBookDetailList.fromJson(Map<String, dynamic> json) => GetBookDetailList(
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        data: json["data"] == null ? null : BookDetail.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -24,7 +24,7 @@ class GetBookDetailList {
       };
 }
 
-class Data {
+class BookDetail {
   int? id;
   int? year;
   String? title;
@@ -36,7 +36,7 @@ class Data {
   DateTime? createdAt;
   List<Villain>? villains;
 
-  Data({
+  BookDetail({
     this.id,
     this.year,
     this.title,
@@ -49,7 +49,7 @@ class Data {
     this.villains,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory BookDetail.fromJson(Map<String, dynamic> json) => BookDetail(
         id: json["id"],
         year: json["Year"],
         title: json["Title"],

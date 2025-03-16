@@ -34,26 +34,4 @@ class DialogManager {
       ),
     );
   }
-
-  static void customAlertCardDialog({required BuildContext context, required String title, required Widget actions, required Widget body}) {
-    showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-          title: Text(
-            title,
-            style: TextStyle(color: CustomColorConstant.instance.blueGrey),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [body],
-          ),
-          actions: [
-            GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.close))
-          ]),
-    );
-  }
 }
