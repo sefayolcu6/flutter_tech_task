@@ -29,76 +29,82 @@ class _FavoriteListScreenState extends State<FavoriteListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "my_favorite_list".tr(),
-          ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  DialogManager.customAlertDialog(
-                      context: context,
-                      title: "are_you_sure".tr(),
-                      alertBody: [Text("your_saved_data_will_be_deleted".tr())],
-                      buttonOntap: () {
-                        favoriteListCubit.clearBooks();
-                        Navigator.pop(context);
-                      },
-                      buttonText: "yes".tr());
-                },
-                icon: Icon(Icons.delete))
-          ],
-        ),
-        body: BlocBuilder<FavoriteListCubit, FavoriteListState>(
-          builder: (context, state) {
-            if (state is FavoriteListLoading) {
-              return Center(child: Lottie.asset(ImagePaths.instance.loadingLottie));
-            } else if (state is FavoriteListSuccess) {
-              return ListView.builder(
-                itemCount: state.books.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: CustomPaddingConstant.instance.appPaddingAll16,
-                      child: Column(
+    return Scaffold(appBar: _buildAppBar(context), body: _buildBodyView());
+  }
+
+  BlocBuilder<FavoriteListCubit, FavoriteListState> _buildBodyView() {
+    return BlocBuilder<FavoriteListCubit, FavoriteListState>(
+      builder: (context, state) {
+        if (state is FavoriteListLoading) {
+          return Center(child: Lottie.asset(ImagePaths.instance.loadingLottie));
+        } else if (state is FavoriteListSuccess) {
+          return ListView.builder(
+            itemCount: state.books.length,
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: CustomPaddingConstant.instance.appPaddingAll16,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        state.books[index].handle,
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: CustomColorConstant.instance.primaryColor,
+                            ),
+                      ),
+                      customDivider(),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            state.books[index].handle,
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: CustomColorConstant.instance.primaryColor,
-                                ),
-                          ),
-                          customDivider(),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildDetailRow("handle".tr(), state.books[index].handle),
-                              _buildDetailRow("isbn".tr(), state.books[index].isbn),
-                              _buildDetailRow("publisher".tr(), state.books[index].publisher),
-                              _buildDetailRow("year".tr(), state.books[index].year.toString()),
-                              _buildDetailRow("notes".tr(), state.books[index].notes),
-                            ],
-                          ),
+                          _buildDetailRow("handle".tr(), state.books[index].handle),
+                          _buildDetailRow("isbn".tr(), state.books[index].isbn),
+                          _buildDetailRow("publisher".tr(), state.books[index].publisher),
+                          _buildDetailRow("year".tr(), state.books[index].year.toString()),
+                          _buildDetailRow("notes".tr(), state.books[index].notes),
                         ],
                       ),
-                    ),
-                  );
-                },
+                    ],
+                  ),
+                ),
               );
-            } else if (state is FavoriteListError) {
-              return NotFoundWidget(title: state.description, desc: state.description);
-            } else {
-              return NotFoundWidget(title: "not_found".tr(), desc: "book_list_not_found".tr());
-            }
-          },
-        ));
+            },
+          );
+        } else if (state is FavoriteListError) {
+          return NotFoundWidget(title: state.description, desc: state.description);
+        } else {
+          return NotFoundWidget(title: "not_found".tr(), desc: "book_list_not_found".tr());
+        }
+      },
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Text(
+        "my_favorite_list".tr(),
+      ),
+      actions: [
+        IconButton(
+            onPressed: () {
+              DialogManager.customAlertDialog(
+                  context: context,
+                  title: "are_you_sure".tr(),
+                  alertBody: [Text("your_saved_data_will_be_deleted".tr())],
+                  buttonOntap: () {
+                    favoriteListCubit.clearBooks();
+                    Navigator.pop(context);
+                  },
+                  buttonText: "yes".tr());
+            },
+            icon: Icon(Icons.delete))
+      ],
+    );
   }
 
   Widget _buildDetailRow(
